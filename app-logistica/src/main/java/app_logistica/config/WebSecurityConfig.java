@@ -1,6 +1,5 @@
 package app_logistica.config;
 import app_logistica.entity.Usuario;
-import app_logistica.entity.Rol;
 import app_logistica.repository.UsuarioRepository;
 
 import javax.sql.DataSource;
@@ -18,7 +17,6 @@ import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.savedrequest.DefaultSavedRequest;
 
-import jakarta.persistence.Access;
 import jakarta.servlet.http.HttpSession;
 
 @Configuration
@@ -38,7 +36,7 @@ public class WebSecurityConfig {
 
     @Bean 
     public UserDetailsManager userDetailsManager() {
-        JdbcUserDetailsManager users = new JdbcUserDetailsManager();
+        JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
         
         users.setUsersByUsernameQuery(
             "SELECT email, pwd, activo FROM usuario WHERE email = ?"
